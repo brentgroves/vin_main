@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	// greetings "github.com/brentgroves/greetings3" // should get v0.3.0
+
+	vin "github.com/brentgroves/vin1"
 )
 
 func main() {
@@ -11,6 +13,17 @@ func main() {
 	// the time, source file, and line number.
 	log.SetPrefix("vin_main: ")
 	log.SetFlags(0)
+
+	const (
+		validVIN   = vin.VIN("W0L000051T2123456")
+		invalidVIN = vin.VIN("W0")
+	)
+
+	manufacturer := validVIN.Manufacturer()
+	if manufacturer != "W0L" {
+		log.Fatal("W0L error")
+	}
+	fmt.Println(manufacturer)
 
 	// Request greeting messages for the names.
 	// messages, err := greetings.Hellos(names)
