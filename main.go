@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	vin "github.com/brentgroves/vin1"
+	vin "github.com/brentgroves/vin1/vin-stages/3"
 )
 
 func main() {
@@ -15,11 +15,16 @@ func main() {
 	log.SetFlags(0)
 
 	const (
-		validVIN   = vin.VIN("W0L000051T2123456")
-		invalidVIN = vin.VIN("W0")
+		validVIN   = "W0L000051T2123456"
+		invalidVIN = "W0"
 	)
 
-	manufacturer := validVIN.Manufacturer()
+	vin1, err := vin.NewVIN(validVIN)
+	if err != nil {
+		t.Errorf("creating NewVIN from %s returned an error: %s", validVIN, err.Error())
+	}
+
+	manufacturer := vin1.Manufacturer()
 	if manufacturer != "W0L" {
 		log.Fatal("W0L error")
 	}
