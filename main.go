@@ -21,7 +21,7 @@ func main() {
 
 	vin1, err := vin.NewVIN(validVIN)
 	if err != nil {
-		t.Errorf("creating NewVIN from %s returned an error: %s", validVIN, err.Error())
+		log.Fatalf("creating NewVIN from %s returned an error: %s", validVIN, err.Error())
 	}
 
 	manufacturer := vin1.Manufacturer()
