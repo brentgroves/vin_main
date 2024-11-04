@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	vin "github.com/brentgroves/vin1/vin-stages/3"
+	vin "github.com/brentgroves/vin1/vin-stages/4"
 )
 
 func main() {
@@ -17,25 +17,22 @@ func main() {
 	const (
 		validVIN   = "W0L000051T2123456"
 		invalidVIN = "W0"
+		euSmallVIN = "W09000051T2123456"
 	)
 
-	vin1, err := vin.NewVIN(validVIN)
-	if err != nil {
-		log.Fatalf("creating NewVIN from %s returned an error: %s", validVIN, err.Error())
+	// slice of vin or vinEU types that implement VIN interface
+	var testVINs []vin.VIN
+	testVIN, _ := vin.NewEUVIN(euSmallVIN)
+	// now there is no need to cast!
+	testVINs = append(testVINs, testVIN)
+
+	for _, vin := range testVINs {
+		manufacturer := vin.Manufacturer()
+		if manufacturer != "W09123" {
+			log.Printf("unexpected manufacturer %s for VIN %s", manufacturer, testVIN)
+		}
+		fmt.Println(manufacturer)
+
 	}
 
-	manufacturer := vin1.Manufacturer()
-	if manufacturer != "W0L" {
-		log.Fatal("W0L error")
-	}
-	fmt.Println(manufacturer)
-
-	// Request greeting messages for the names.
-	// messages, err := greetings.Hellos(names)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// If no error was returned, print the returned map of
-	// messages to the console.
-	// fmt.Println(messages)
 }
